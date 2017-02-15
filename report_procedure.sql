@@ -38,4 +38,3 @@ end$$
 delimiter ;
 call report('2017-02-03','2017-02-09','meat');
 select * from t_report;
-select * from t_reportid;

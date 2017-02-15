@@ -1,6 +1,7 @@
 package com.captain.supermarket.accesscontrol.vo;
 
 /**
+ * 用户 vo
  * @author lsc
  *         createtime 2017年 02月 02日 星期四 下午8:50
  */

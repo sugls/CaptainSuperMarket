@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ * 系统业务控制器
+ * 查询报表，备份数据库，注销登录等
  * @author lsc
  *         createtime 2017年 02月 06日 星期一 下午12:38
  */

@@ -1,8 +1,7 @@
 package com.captain.supermarket.vendor.vo;
 
-import java.util.StringJoiner;
-
 /**
+ * 供应商 vo
  * @author lsc
  *         createtime 2017年 02月 07日 星期二 下午1:25
  */

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ * 账单相关业务实现类
  * @author lsc
  *         createtime 2017年 02月 09日 星期四 下午5:25
  */
@@ -24,7 +25,7 @@ public class  BillDaoImpl implements IBillDao{
         int billid = -1;
         DBUtil dbUtil = new DBUtil();
         String sql1 = "insert into bill(billdate,billduedate,vendorid,paidflag,sum) values(?,?,?,?,?)";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql1, Statement.RETURN_GENERATED_KEYS);
         ResultSet rs = null;
         try {
             ps.setDate(1, bill.getBilldate());
@@ -61,7 +62,7 @@ public class  BillDaoImpl implements IBillDao{
             e.printStackTrace();
         }
         String sql = "insert into billdetails(billid,departid,amount) values(?,?,?)";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         for (Billdetails bills :
                 billdetailsList) {
             try {
@@ -96,7 +97,7 @@ public class  BillDaoImpl implements IBillDao{
         List<Bill> billList = new Vector<>();
         DBUtil dbUtil = new DBUtil();
         String sql = "select billid,billdate,billduedate,sum from bill where paidflag = false and vendorid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setInt(1, vendorid);
@@ -125,7 +126,7 @@ public class  BillDaoImpl implements IBillDao{
         List<Billdetails> list = new Vector<>();
         DBUtil dbUtil = new DBUtil();
         String sql = "select departname,sum(amount) amount from billdetails natural join department where billid=? group by departid";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setInt(1, billid);
@@ -150,7 +151,7 @@ public class  BillDaoImpl implements IBillDao{
         Bill bill = new Bill();
         DBUtil dbUtil = new DBUtil();
         String sql = "select billdate,billduedate,vendorid,vendorname,sum from bill natural join vendor where billid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setInt(1,billid);
             ResultSet rs = ps.executeQuery();
@@ -174,12 +175,14 @@ public class  BillDaoImpl implements IBillDao{
         boolean result = false;
         DBUtil dbUtil = new DBUtil();
         String sql = "update bill set paidflag = true where billid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setInt(1,billid);
             result = ps.executeUpdate() != 0;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CloseStream.close(ps);
         }
         dbUtil.close();
         return result;
@@ -190,7 +193,7 @@ public class  BillDaoImpl implements IBillDao{
         boolean result = false;
         DBUtil dbUtil = new DBUtil();
         String sql = "insert into payment(billid,paymode,checkno) values(?,?,?)";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setInt(1,payment.getBillid());
             ps.setInt(2,payment.getPaymode());
@@ -198,6 +201,8 @@ public class  BillDaoImpl implements IBillDao{
             result = ps.executeUpdate() != 0;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CloseStream.close(ps);
         }
         dbUtil.close();
         return result;

@@ -1,6 +1,7 @@
 package com.captain.supermarket.accesscontrol.dao;
 
 import com.captain.supermarket.accesscontrol.vo.Users;
+import com.captain.supermarket.util.CloseStream;
 import com.captain.supermarket.util.DBUtil;
 
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * 用户相关业务实现类
  * @author lsc
  *         createtime 2017年 02月 02日 星期四 下午9:01
  */
@@ -18,7 +20,7 @@ public class UserDaoImpl implements IUserDao{
         Users user = null;
         DBUtil dbUtil = new DBUtil();
         String sql = "SELECT useridentity FROM user WHERE password = ? AND username = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setString(1,password);
@@ -33,20 +35,7 @@ public class UserDaoImpl implements IUserDao{
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (rs!=null){
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (ps!=null){
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            CloseStream.close(rs,ps);
         }
         dbUtil.close();
         return user;

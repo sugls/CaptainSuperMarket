@@ -3,6 +3,7 @@ package com.captain.supermarket.bill.vo;
 import java.sql.Date;
 
 /**
+ * 账单 vo
  * @author lsc
  *         createtime 2017年 02月 09日 星期四 上午10:59
  */

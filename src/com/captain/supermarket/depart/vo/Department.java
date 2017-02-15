@@ -1,6 +1,6 @@
 package com.captain.supermarket.depart.vo;
 
-/**
+/** 部门 vo
  * @author lsc
  *         createtime 2017年 02月 04日 星期六 下午12:32
  */

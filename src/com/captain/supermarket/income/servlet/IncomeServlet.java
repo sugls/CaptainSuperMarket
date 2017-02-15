@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
+ * 收入相关业务控制器
  * @author lsc
  *         createtime 2017年 02月 03日 星期五 下午9:59
  */

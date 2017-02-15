@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ * 系统业务实现类
  * @author lsc
  *         createtime 2017年 02月 06日 星期一 下午12:55
  */
@@ -20,7 +21,7 @@ public class ManageDaoImpl implements IManageDao{
         String sql = "{call report(?,?,?)}";
         CallableStatement cs = dbUtil.getCallableStatement(sql);
         String sql1 = "select departname,`date`,income,expense from t_report";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql1);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql1);
         ResultSet rs = null;
         try {
             cs.setDate(1,fromdate);
@@ -50,7 +51,7 @@ public class ManageDaoImpl implements IManageDao{
         List<String> list = new Vector<>();
         DBUtil dbUtil = new DBUtil();
         String sql = "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'supermarket'";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             rs = ps.executeQuery();

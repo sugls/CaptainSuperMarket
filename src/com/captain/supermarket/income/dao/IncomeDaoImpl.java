@@ -1,6 +1,7 @@
 package com.captain.supermarket.income.dao;
 
 import com.captain.supermarket.income.vo.Income;
+import com.captain.supermarket.util.CloseStream;
 import com.captain.supermarket.util.DBUtil;
 
 import java.sql.Date;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ * 收入相关业务实现类
  * @author lsc
  *         createtime 2017年 02月 04日 星期六 上午11:03
  */
@@ -21,7 +23,7 @@ public class IncomeDaoImpl implements IIncomeDao{
         DBUtil dbUtil = new DBUtil();
         String sql = "select incomeid,departid,businessdate,lastmoddate,dailyincome,departname\n" +
                 "from income natural join department where businessdate = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setDate(1,date);
@@ -39,16 +41,7 @@ public class IncomeDaoImpl implements IIncomeDao{
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try{
-                if (rs!=null){
-                    rs.close();
-                }
-                if (ps!=null){
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            CloseStream.close(rs,ps);
         }
         dbUtil.close();
         return list;
@@ -59,13 +52,15 @@ public class IncomeDaoImpl implements IIncomeDao{
         int result = 0;
         DBUtil dbUtil = new DBUtil();
         String sql = "insert into income set dailyincome = ? , businessdate = current_date(),departid = (select departid from department where departname = ?)";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setDouble(1,income.getDailyincome());
             ps.setString(2,income.getDepartname());
             result = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CloseStream.close(ps);
         }
         dbUtil.close();
         return result !=0;
@@ -77,7 +72,7 @@ public class IncomeDaoImpl implements IIncomeDao{
         DBUtil dbUtil = new DBUtil();
         String sql = "select departid,departname,businessdate,lastmoddate,dailyincome from income \n" +
                 "natural join department where incomeid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setInt(1,incomeid);
@@ -93,16 +88,7 @@ public class IncomeDaoImpl implements IIncomeDao{
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try{
-                if (rs!=null){
-                    rs.close();
-                }
-                if (ps!=null){
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            CloseStream.close(rs,ps);
         }
         dbUtil.close();
         return income;
@@ -113,7 +99,7 @@ public class IncomeDaoImpl implements IIncomeDao{
         int result = 0;
         DBUtil dbUtil = new DBUtil();
         String sql = "update income set dailyincome = ?, lastmoddate = current_date() where departid = ? and businessdate = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setDouble(1,income.getDailyincome());
             ps.setInt(2,income.getDepartid());
@@ -121,6 +107,8 @@ public class IncomeDaoImpl implements IIncomeDao{
             result = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CloseStream.close(ps);
         }
         dbUtil.close();
         return result != 0;

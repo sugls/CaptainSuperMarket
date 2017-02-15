@@ -14,6 +14,11 @@ import com.captain.supermarket.vendor.dao.VendorDaoImpl;
  */
 public class DaoFactory {
 
+    /**
+     * 获取实例
+     * @param name 对象名称
+     * @return 实现 IBaseDao 接口的子类
+     */
     public static IBaseDao getInstance(String name){
         if ("user".equals(name)){
           return  new UserDaoImpl();

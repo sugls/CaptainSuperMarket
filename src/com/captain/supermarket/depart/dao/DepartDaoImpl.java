@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ * 部门相关业务实现类
  * @author lsc
  *         createtime 2017年 02月 04日 星期六 下午12:35
  */
@@ -23,7 +24,7 @@ public enum  DepartDaoImpl implements IDepartDao {
         List<Department> list = new Vector<>();
         DBUtil dbUtil = new DBUtil();
         String sql = "select departid,departname,description from department";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             rs = ps.executeQuery();
@@ -48,7 +49,7 @@ public enum  DepartDaoImpl implements IDepartDao {
         String result = null;
         DBUtil dbUtil = new DBUtil();
         String sql = "insert into department(departname,description) values(?,?)";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setString(1,depart.getDepartname());
             ps.setString(2,depart.getDescription());
@@ -59,6 +60,8 @@ public enum  DepartDaoImpl implements IDepartDao {
             if (e.getErrorCode()==1062){
                 result = "this department already exists";
             }
+        } finally {
+            CloseStream.close(ps);
         }
         return result;
     }
@@ -68,7 +71,7 @@ public enum  DepartDaoImpl implements IDepartDao {
         Department depart = new Department();
         DBUtil dbUtil = new DBUtil();
         String sql = "select departname,description from department where departid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setInt(1,departid);
@@ -92,7 +95,7 @@ public enum  DepartDaoImpl implements IDepartDao {
         String result = null;
         DBUtil dbUtil = new DBUtil();
         String sql = "update department set departname = ? , description = ? where departid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setString(1,depart.getDepartname());
             ps.setString(2,depart.getDescription());

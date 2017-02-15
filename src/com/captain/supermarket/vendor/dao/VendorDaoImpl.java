@@ -20,7 +20,7 @@ public class VendorDaoImpl implements IVendorDao{
         List<Vendor> listvendor = new Vector<>();
         DBUtil dbUtil = new DBUtil();
         String sql = " select vendorid,vendorname,vendoraddress,vendorphone,vendorfax,contact from vendor";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             rs = ps.executeQuery();
@@ -47,7 +47,7 @@ public class VendorDaoImpl implements IVendorDao{
     public boolean hasVendorByName(String vendorname) {
         DBUtil dbUtil = new DBUtil();
         String sql = "select vendorid from vendor where vendorname = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         boolean result = false;
         ResultSet rs = null;
         try {
@@ -70,7 +70,7 @@ public class VendorDaoImpl implements IVendorDao{
         boolean result = false;
         DBUtil dbUtil = new DBUtil();
         String sql = "insert into vendor(vendorname,vendoraddress,vendorphone,vendorfax,contact) values(?,?,?,?,?)";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setString(1,vendor.getVendorname());
             ps.setString(2,vendor.getVendoraddress());
@@ -92,7 +92,7 @@ public class VendorDaoImpl implements IVendorDao{
         Vendor vendor = new Vendor();
         DBUtil dbUtil = new DBUtil();
         String sql = "select vendorname,vendoraddress,vendorphone,vendorfax,contact from vendor where vendorid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         ResultSet rs = null;
         try {
             ps.setInt(1, vendorid);
@@ -119,7 +119,7 @@ public class VendorDaoImpl implements IVendorDao{
         boolean result = false;
         DBUtil dbUtil = new DBUtil();
         String sql = "update vendor set vendorname = ?,vendoraddress = ?,vendorphone = ?,vendorfax = ?,contact = ? where vendorid = ?";
-        PreparedStatement ps = dbUtil.getPrepareparedStatement(sql);
+        PreparedStatement ps = dbUtil.getPreparedStatement(sql);
         try {
             ps.setString(1,vendor.getVendorname());
             ps.setString(2,vendor.getVendoraddress());

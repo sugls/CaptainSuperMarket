@@ -15,7 +15,7 @@
                 alert("check no. cannot be empty");
                 return false;
             } else {
-                var reg = /(^[a-zA-Z]{0,4}[0-9];$)+/;
+                var reg = /([a-zA-Z]{0,4}[0-9];$)+/;
                 if((reg.test($("#checkno").val()))==false){
                     alert("please input valid check NO.");
                     return false;

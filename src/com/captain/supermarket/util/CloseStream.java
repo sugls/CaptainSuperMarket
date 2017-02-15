@@ -6,22 +6,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * 资源释放工具类
  * @author lsc
  *         createtime 2017年 02月 04日 星期六 下午9:21
  */
 public class CloseStream {
+    /**
+     * 释放资源
+     * @param resultSet ResultSet 对象
+     * @param preparedStatement PreparedStatement 对象
+     */
     public static void close(ResultSet resultSet, PreparedStatement preparedStatement){
-        try{
-            if (resultSet!=null){
+        close(preparedStatement);
+        if (resultSet!=null){
+            try {
                 resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            if (preparedStatement!=null){
-                preparedStatement.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
+
+    /**
+     * 重载方法
+     * @param preparedStatement PreparedStatement 对象
+     */
     public static void close(PreparedStatement preparedStatement){
         try {
             if (preparedStatement!=null){
@@ -31,19 +40,21 @@ public class CloseStream {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 重载方法
+     * @param resultSet ResultSet 对象
+     * @param preparedStatement PreparedStatement 对象
+     * @param callableStatement CallableStatement 对象
+     */
     public static void close(ResultSet resultSet,PreparedStatement preparedStatement,CallableStatement callableStatement){
-        try {
-            if (resultSet!=null){
-                resultSet.close();
-            }
-            if (preparedStatement!=null){
-                preparedStatement.close();
-            }
-            if (callableStatement!=null){
+        close(resultSet,preparedStatement);
+        if (callableStatement!=null){
+            try {
                 callableStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

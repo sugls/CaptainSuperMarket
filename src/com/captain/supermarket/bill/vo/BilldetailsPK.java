@@ -1,6 +1,7 @@
 package com.captain.supermarket.bill.vo;
 
 /**
+ * 账单详情联合主键
  * @author lsc
  *         createtime 2017年 02月 09日 星期四 上午11:07
  */

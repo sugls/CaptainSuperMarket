@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * 供应商相关业务控制器
  * @author lsc
  *         createtime 2017年 02月 07日 星期二 下午1:32
  */

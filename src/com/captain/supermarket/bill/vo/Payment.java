@@ -1,6 +1,7 @@
 package com.captain.supermarket.bill.vo;
 
 /**
+ * 支付信息
  * @author lsc
  *         createtime 2017年 02月 10日 星期五 下午4:11
  */

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
+ * 账单相关业务控制器
  * @author lsc
  *         createtime 2017年 02月 08日 星期三 下午5:02
  */

@@ -13,6 +13,9 @@ import java.util.Properties;
 public class DBUtil {
     private Connection conn;
 
+    /**
+     * 无参构造方法，初始化
+     */
     public DBUtil() {
         InputStream is = super.getClass().getClassLoader().getResourceAsStream("database.properties");
         Properties properties = new Properties();
@@ -41,10 +44,10 @@ public class DBUtil {
 
     /**
      * 建立sql语句发送通道
-     * @param sql
+     * @param sql sql语句
      * @return PreparedStatement
      */
-    public PreparedStatement getPrepareparedStatement(String sql){
+    public PreparedStatement getPreparedStatement(String sql){
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(sql);
@@ -63,6 +66,12 @@ public class DBUtil {
             }
         }
     }
+
+    /**
+     * 建立存储过程语句发送通道
+     * @param sql sql语句
+     * @return CallableStatement
+     */
     public CallableStatement getCallableStatement(String sql){
         CallableStatement cs = null;
         try {
@@ -73,7 +82,13 @@ public class DBUtil {
         return cs;
     }
 
-    public PreparedStatement getPrepareparedStatement(String sql1, int returnGeneratedKeys) {
+    /**
+     * 重载 getPreparedStatement 方法
+     * @param sql1 sql语句
+     * @param returnGeneratedKeys 返回自增主键id的值
+     * @return PreparedStatement
+     */
+    public PreparedStatement getPreparedStatement(String sql1, int returnGeneratedKeys) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(sql1);
